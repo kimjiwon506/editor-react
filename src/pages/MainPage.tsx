@@ -6,6 +6,7 @@ import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 import Box from "../components/box";
 import Button from "../components/Button";
 import Editor from "../components/Editor";
+import Flex from "../components/Flex";
 import Memo from "../interface/Memo";
 
 const MainPage = () => {
@@ -47,6 +48,7 @@ const MainPage = () => {
       });
       console.log(data);
       alert("제출완료");
+      await loadMemo();
     } catch (e) {
       alert("저장실패");
     }
@@ -64,15 +66,16 @@ const MainPage = () => {
       <Button mt={"8px"} onClick={handleSubmit}>
         제출
       </Button>
-      {memoList.map(value => 
-        <Box
-          key={value.created_at}
-          dangerouslySetInnerHTML={{
-            __html: value.content
-          }}
-        >
-        </Box>
-      )}
+      {memoList.map((value) => (
+        <Flex border={"#ccc solid 1px"} my="8px" p="12px" key={value.created_at} flexDirection="column">
+          <Box
+            dangerouslySetInnerHTML={{
+              __html: value.content,
+            }}
+          ></Box>
+           <Box textAlign={"right"} fontSize={"12px"} color="#555">생성: {new Date(value.created_at).toLocaleString()}</Box>
+        </Flex>
+      ))}
     </Box>
   );
 };
